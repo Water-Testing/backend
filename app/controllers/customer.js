@@ -1,6 +1,6 @@
 require("dotenv").config(); // load .env variables
 const { Router } = require("express"); // import router from express
-const Customer = require("../models/customer.model"); // import user model
+const Customer = require("../database/models/customer.model"); // import user model
 const bcrypt = require("bcryptjs"); // import bcrypt to hash passwords
 const jwt = require("jsonwebtoken"); // import jwt to sign tokens
 const customerSignupRouter = Router();
@@ -14,9 +14,8 @@ customerSignupRouter.use((req, res, next) => {
   next();
 });
 
-customerSignupRouter.get("/", async (req, res) => { 
+customerSignupRouter.get("/", async (req, res) => {
   res.send("inside customer endpoint");
-
 });
 
 customerSignupRouter.post("/signup", async (req, res) => {
