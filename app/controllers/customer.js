@@ -29,6 +29,7 @@ customerSignupRouter.post("/signup", async (req, res) => {
     // send new user as response
     res.json(customer);
   } catch (error) {
+    //console.log(error);
     res.status(400).json({ error });
   }
 });
