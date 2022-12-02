@@ -2,18 +2,18 @@ const { Schema, model } = require("../connection");
 
 //customer schema
 const customerSchema = new Schema({
-  firstName: String,
-  lastName: String,
-  email: String,
-  password: String,
-  add_1: String,
-  add_2: String,
-  city: String,
-  state: String,
-  country: String,
-  phoneNum: String,
-  cc: String,
-  kitID: Number
+  firstName: { type: String, required: true },
+  lastName: { type: String, required: true },
+  email: { type: String, required: true },
+  password: { type: String, required: true },
+  add_1: { type: String, required: true },
+  add_2: { type: String },
+  city: { type: String, required: true },
+  state: { type: String, required: true },
+  country: { type: String, required: true },
+  phoneNum: { type: String, required: true },
+  cc: { type: String, required: true },
+  kitID: { type: String, required: true },
 });
 const Customer = model("Customer", customerSchema);
 
