@@ -6,6 +6,7 @@ const jwt = require("jsonwebtoken"); // import jwt to sign tokens
 const customerSignupRouter = Router();
 
 //DESTRUCTURE ENV VARIABLES WITH DEFAULTS
+// file deepcode ignore HardcodedSecret: <please specify a reason of ignoring this>
 const { SECRET = "secret" } = process.env;
 
 // middleware that is specific to this router
@@ -29,6 +30,29 @@ customerSignupRouter.post("/signup", async (req, res) => {
     res.json(customer);
   } catch (error) {
     //console.log(error);
+    res.status(400).json({ error });
+  }
+});
+
+// Login route to verify a user and get a token
+customerSignupRouter.post("/login", async (req, res) => {
+  try {
+    // check if the user exists
+    const user = await Customer.findOne({ email: req.body.email });
+    if (user) {
+      //check if password matches
+      const result = await bcrypt.compare(req.body.password, user.password);
+      if (result) {
+        // sign token and send it in response
+        const token = await jwt.sign({ username: user.email }, SECRET);
+        res.json({ token });
+      } else {
+        res.status(400).json({ error: "password doesn't match" });
+      }
+    } else {
+      res.status(400).json({ error: "User doesn't exist" });
+    }
+  } catch (error) {
     res.status(400).json({ error });
   }
 });
