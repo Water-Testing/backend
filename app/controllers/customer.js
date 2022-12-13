@@ -1,8 +1,10 @@
 require("dotenv").config(); // load .env variables
 const { Router } = require("express"); // import router from express
 const Customer = require("../database/models/customer.model"); // import user model
+const TestKit = require("../database/models/kit.model");
 const bcrypt = require("bcryptjs"); // import bcrypt to hash passwords
 const jwt = require("jsonwebtoken"); // import jwt to sign tokens
+const { Types } = require("../database/connection");
 const customerSignupRouter = Router();
 
 //DESTRUCTURE ENV VARIABLES WITH DEFAULTS
@@ -25,9 +27,12 @@ customerSignupRouter.post("/signup", async (req, res) => {
     // deepcode ignore HardcodedSecret: <please specify a reason of ignoring this>, deepcode ignore HardcodedSecret: <please specify a reason of ignoring this>
     req.body.password = await bcrypt.hash(req.body.password, 10);
     // create a new user
+    req.body.kitID = new Types.ObjectId();
     const customer = await Customer.create(req.body);
+    const testKit = await TestKit.create({_id: Types.ObjectId(req.body.kitID), customerID: Types.ObjectId(customer._id), result:'not started'})
     // send new user as response
-    res.json(customer);
+    const response = { customer, testKit };
+    res.json(response);
   } catch (error) {
     //console.log(error);
     res.status(400).json({ error });

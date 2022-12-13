@@ -3,7 +3,7 @@ const express = require("express"); // import express
 const morgan = require("morgan"); //import morgan
 const cors = require("cors");
 const customerSignupRouter = require("../controllers/customer");
-
+const employeeSignupRouter = require("../controllers/employee");
 module.exports = function (app) {
   // GLOBAL MIDDLEWARE
   app.use(cors()); // add cors headers
@@ -11,6 +11,6 @@ module.exports = function (app) {
   app.use(express.json()); // parse json bodies
 
   app.use("/customer", customerSignupRouter);
-  //   app.use("/router1", router1Router);
-  //   app.use("/router2", router2Router);
+  app.use("/employee", employeeSignupRouter);
+
 };
