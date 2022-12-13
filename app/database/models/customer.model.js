@@ -13,7 +13,7 @@ const customerSchema = new Schema({
   country: { type: String, required: true },
   phoneNum: { type: String, required: true },
   cc: { type: String, required: true },
-  kitID: { type: String, required: true },
+  kitID: [{ type: Schema.Types.ObjectId, required: true }],
 });
 const Customer = model("Customer", customerSchema);
 
