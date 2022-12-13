@@ -12,6 +12,5 @@ module.exports = function (app) {
 
   app.use("/customer", customerSignupRouter);
   app.use("/employee", employeeSignupRouter);
-  //   app.use("/router1", router1Router);
-  //   app.use("/router2", router2Router);
+
 };
